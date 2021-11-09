@@ -8,19 +8,19 @@ kumuluzee:
     http:
       port: 8080
   datasources:
-    - jndi-name: jdbc/ImageMetadataDS
-      connection-url: jdbc:postgresql://localhost:5432/image-metadata
+    - jndi-name: jdbc/PolnilniceDS
+      connection-url: jdbc:postgresql://192.168.99.100:5432/polnilnice-data
       username: dbuser
       password: postgres
   health:
     checks:
       data-source-health-check:
         type: liveness
-        jndi-name: jdbc/ImageMetadataDS
+        jndi-name: jdbc/PolnilniceDS
   metrics:
     web-instrumentation:
-      - name: images-endpoint
-        url-pattern: /v1/images/*
+      - name: polnilnice-endpoint
+        url-pattern: /v1/polnilnice/*
   logs:
     config-file: '<?xml version="1.0" encoding="UTF-8"?>
                         <Configuration name="comments">

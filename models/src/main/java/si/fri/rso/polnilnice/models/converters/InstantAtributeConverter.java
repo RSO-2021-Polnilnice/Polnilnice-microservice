@@ -1,4 +1,4 @@
-package si.fri.rso.samples.imagecatalog.models.converters;
+package si.fri.rso.polnilnice.models.converters;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;

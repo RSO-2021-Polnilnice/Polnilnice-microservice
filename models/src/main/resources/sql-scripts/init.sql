@@ -1,1 +1,11 @@
-INSERT INTO image_metadata (title, description, width, height, created, uri) VALUES ('Our fist image', 'This is the first image that we created for the RSO course.', 1280, 1325, TIMESTAMP '2006-01-01 15:36:38', 'https://www.nasa.gov/sites/default/files/styles/full_width/public/thumbnails/image/tess_first_light-tb.jpg');
+INSERT INTO polnilnice (ime, lokacijalat, lokacijalng) VALUES ('Init SQL polnilnica 1', 46.050838, 14.458901);
+INSERT INTO polnilnice (ime, lokacijalat, lokacijalng) VALUES ('Init SQL polnilnica 2', 46.048455, 14.497404);
+INSERT INTO polnilnice (ime, lokacijalat, lokacijalng) VALUES ('Init SQL polnilnica 3', 46.073305, 14.582251);
+
+INSERT INTO ocene (polnilnica_id, user_id, ocena, besedilo) VALUES (1, 1, 4, 'Neki je s kablom narobe.');
+INSERT INTO ocene (polnilnica_id, user_id, ocena, besedilo) VALUES (1, 2, 5, 'Super :)');
+INSERT INTO ocene (polnilnica_id, user_id, ocena, besedilo) VALUES (2, 1, 1, 'Polnilnica je bila že zasedena. Katastrofa.');
+
+INSERT INTO termini (polnilnica_id, user_id, datefrom, dateto) VALUES (1, 1, 1636376400, 1636380000);
+INSERT INTO termini (polnilnica_id, user_id, datefrom, dateto) VALUES (1, 2, 1636380000, 1636385400);
+INSERT INTO termini (polnilnica_id, user_id, datefrom, dateto) VALUES (2, 1, 1636540200, 1636547400);
