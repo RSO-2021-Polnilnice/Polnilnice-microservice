@@ -12,63 +12,9 @@ kumuluzee:
       connection-url: jdbc:postgresql://192.168.99.100:5432/polnilnice-data
       username: dbuser
       password: postgres
-  health:
-    checks:
-      data-source-health-check:
-        type: liveness
-        jndi-name: jdbc/PolnilniceDS
-  metrics:
-    web-instrumentation:
-      - name: polnilnice-endpoint
-        url-pattern: /v1/polnilnice/*
-  logs:
-    config-file: '<?xml version="1.0" encoding="UTF-8"?>
-                        <Configuration name="comments">
-                            <Appenders>
-                                <Console name="console" target="SYSTEM_OUT">
-                                    <PatternLayout pattern="%d %p %marker %m %X %ex %n"/>
-                                </Console>
-                                <Socket name="logstash" host="7889bb41-f39e-47e8-ba99-7544d8dfb6a5-ls.logit.io"
-                                port="12345" protocol="udp">
-                                    <JSONLayout complete="false" compact="true" eventEol="true" charset="UTF-8" properties="true"/>
-                                </Socket>
-                            </Appenders>
-                            <Loggers>
-                                <!-- Default logger -->
-                                <Root level="all">
-                                    <AppenderRef ref="console" level="info" />
-                                    <AppenderRef ref="logstash" level="trace" />
-                                </Root>
-                            </Loggers>
-                        </Configuration>'
-  rest-client:
-    registrations:
-      - class: polnilnice-processing-api
-        url: http://localhost:8082/v1
-        read-timeout: 5000
-  streaming:
-    kafka:
-      producer:
-        bootstrap-servers: ark-01.srvs.cloudkafka.com:9094
-        acks: all
-        retries: 0
-        batch-size: 16384
-        linger-ms: 1
-        buffer-memory: 33554432
-        key-serializer: org.apache.kafka.common.serialization.StringSerializer
-        value-serializer: org.apache.kafka.common.serialization.StringSerializer
-        security-protocol: SASL_SSL
-        sasl-mechanism: SCRAM-SHA-256
-        group-id: newer
-        enable-auto-commit: true
-        auto-commit-interval-ms: 1000
-        auto-offset-reset: earliest
-        session-timeout-ms: 30000
-        sasl-jaas-config:
+  config:
+    consul:
+      agent: http://192.168.99.100:8500
+
 rest-properties:
   maintenance-mode: false
-  broken: false
-app-properties:
-  amazon-rekognition:
-    access-key:
-    secret-key:
