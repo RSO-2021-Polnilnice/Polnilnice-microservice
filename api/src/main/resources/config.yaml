@@ -43,7 +43,7 @@ kumuluzee:
                         </Configuration>'
   rest-client:
     registrations:
-      - class: image-processing-api
+      - class: polnilnice-processing-api
         url: http://localhost:8082/v1
         read-timeout: 5000
   streaming:
