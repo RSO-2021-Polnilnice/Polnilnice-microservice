@@ -1,5 +1,5 @@
 kumuluzee:
-  name: image-catalog-service
+  name: polnilnice-service
   env:
     name: dev
   version: 1.0.0
@@ -13,6 +13,9 @@ kumuluzee:
       username: dbuser
       password: postgres
   config:
+    consul:
+      agent: http://192.168.99.100:8500
+  discovery:
     consul:
       agent: http://192.168.99.100:8500
 

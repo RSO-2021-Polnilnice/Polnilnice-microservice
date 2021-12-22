@@ -14,7 +14,7 @@ public class RestProperties {
 
     @ConfigValue(watch = true)
     private Boolean maintenanceMode;
-
+    
 
     private Boolean broken;
 
