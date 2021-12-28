@@ -9,15 +9,28 @@ kumuluzee:
       port: 8080
   datasources:
     - jndi-name: jdbc/PolnilniceDS
-      connection-url: jdbc:postgresql://192.168.99.100:5432/polnilnice-data
+      connection-url: jdbc:postgresql://192.168.99.100:5433/polnilnice-data
       username: dbuser
       password: postgres
+  health:
+    checks:
+      data-source-health-check:
+        type: liveness
+        jndi-name: jdbc/PolnilniceDS
+    metrics:
+      web-instrumentation:
+        - name: polnilnice-endpoint
+          url-pattern: /v1/polnilnice/*
   config:
     consul:
       agent: http://192.168.99.100:8500
   discovery:
+    cluster: 1
     consul:
       agent: http://192.168.99.100:8500
+    ttl: 20
+    ping-interval: 15
 
 rest-properties:
   maintenance-mode: false
+  broken: false

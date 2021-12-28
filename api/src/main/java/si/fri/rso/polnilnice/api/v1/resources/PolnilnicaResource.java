@@ -1,5 +1,13 @@
 package si.fri.rso.polnilnice.api.v1.resources;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kumuluz.ee.discovery.annotations.DiscoverService;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import si.fri.rso.polnilnice.lib.Ocena;
 import si.fri.rso.polnilnice.lib.Polnilnica;
 import si.fri.rso.polnilnice.lib.Termin;
@@ -14,7 +22,10 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.Optional;
 
 @ApplicationScoped
 @Path("/polnilnice")
@@ -30,6 +41,15 @@ public class PolnilnicaResource {
 
     @Inject
     private OcenaBean ocenaBean;
+
+
+    @Inject
+    @DiscoverService(value = "novice-service", environment = "dev", version = "1.0.0")
+    private Optional<String> noviceHost;
+
+
+    CloseableHttpClient httpClient = HttpClients.createDefault();
+
 
     /** GET full polnilnice list **/
     @GET
@@ -60,6 +80,13 @@ public class PolnilnicaResource {
     @Path("/{polnilnicaId}/termini")
     public Response getTerminiForPolnilnica(@PathParam("polnilnicaId") Integer polnilnicaId) {
 
+        // check if polnilnica with this id actually exists
+        Polnilnica polnilnica = polnilnicaBean.getPolnilnicaById(polnilnicaId);
+        if (polnilnica == null) {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Polnilnica with id " + polnilnicaId + " does not exist.").build();
+        }
+
         List<Termin> terminList = terminBean.getTerminiByPolnilnicaId(polnilnicaId);
         if (terminList == null || terminList.isEmpty()) {
             return Response.status(Response.Status.NOT_FOUND)
@@ -72,6 +99,13 @@ public class PolnilnicaResource {
     @GET
     @Path("/{polnilnicaId}/ocene")
     public Response getOceneForPolnilnica(@PathParam("polnilnicaId") Integer polnilnicaId) {
+
+        // check if polnilnica with this id actually exists
+        Polnilnica polnilnica = polnilnicaBean.getPolnilnicaById(polnilnicaId);
+        if (polnilnica == null) {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Polnilnica with id " + polnilnicaId + " does not exist.").build();
+        }
 
         List<Ocena> ocenaList = ocenaBean.getOceneByPolnilnicaId(polnilnicaId);
         if (ocenaList == null || ocenaList.isEmpty()) {
@@ -88,6 +122,12 @@ public class PolnilnicaResource {
         if ((polnilnica.getIme() == null || polnilnica.getLokacijaLat() == null || polnilnica.getLokacijaLng() == null)) {
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity("'ime'(String), lokacijaLat'(double) and 'lokacijaLng'(double) are mandatory fields").build();
+        }
+
+        // TODO: check if this works
+        if (noviceHost.isPresent()) {
+            String noviceResponse = myHttpPost(noviceHost.get() + "/v1/novice/poslji", "");
+            System.out.println(noviceResponse);
         }
 
         polnilnica = polnilnicaBean.createPolnilnica(polnilnica);
@@ -195,6 +235,25 @@ public class PolnilnicaResource {
         }
     }
 
+
+    private String myHttpPost(String url, String jsonbody) {
+        HttpPost request = new HttpPost(url);
+        request.setHeader("Accept", "application/json");
+        request.setHeader("Content-type", "application/json");
+        CloseableHttpResponse response = null;
+        try {
+            request.setEntity(new StringEntity(jsonbody));
+        } catch (UnsupportedEncodingException e) {
+            return e.getMessage();
+        }
+        try {
+            response = httpClient.execute(request);
+            return EntityUtils.toString(response.getEntity());
+        } catch (IOException e) {
+            return  e.getMessage();
+        }
+
+    }
 
 
 }
