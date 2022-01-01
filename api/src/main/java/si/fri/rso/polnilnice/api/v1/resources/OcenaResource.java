@@ -1,5 +1,6 @@
 package si.fri.rso.polnilnice.api.v1.resources;
 
+import com.kumuluz.ee.cors.annotations.CrossOrigin;
 import si.fri.rso.polnilnice.lib.Ocena;
 import si.fri.rso.polnilnice.lib.Termin;
 import si.fri.rso.polnilnice.services.beans.OcenaBean;
@@ -16,6 +17,7 @@ import java.util.List;
 @Path("/ocene")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@CrossOrigin(allowOrigin = "*")
 public class OcenaResource {
 
     @Inject

@@ -1,5 +1,6 @@
 package si.fri.rso.polnilnice.api.v1.resources;
 
+import com.kumuluz.ee.cors.annotations.CrossOrigin;
 import si.fri.rso.polnilnice.lib.Termin;
 import si.fri.rso.polnilnice.services.beans.TerminBean;
 
@@ -14,6 +15,7 @@ import java.util.List;
 @Path("/termini")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@CrossOrigin(allowOrigin = "*")
 public class TerminResource {
 
     @Inject

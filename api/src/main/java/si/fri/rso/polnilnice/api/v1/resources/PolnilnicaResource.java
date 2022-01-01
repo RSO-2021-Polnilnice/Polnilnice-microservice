@@ -1,6 +1,7 @@
 package si.fri.rso.polnilnice.api.v1.resources;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kumuluz.ee.cors.annotations.CrossOrigin;
 import com.kumuluz.ee.discovery.annotations.DiscoverService;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -31,6 +32,7 @@ import java.util.Optional;
 @Path("/polnilnice")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@CrossOrigin(allowOrigin = "*")
 public class PolnilnicaResource {
 
     @Inject
