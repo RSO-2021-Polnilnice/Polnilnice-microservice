@@ -13,18 +13,18 @@ spec:
         app: polnilnice
     spec:
       containers:
-        - image: rso2021jklk/polnilnice:latest
+        - image: rso2021jklk/polnilnice:2022-01-03-04-01-43
           name: polnilnice
           env:
-            - name: KUMULUZEE_DATASOURCES1_CONNECTIONURL
+            - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
               value: jdbc:postgresql://castor.db.elephantsql.com:5432/suqnbqwz
-            - name: KUMULUZEE_DATASOURCES1_USERNAME
+            - name: KUMULUZEE_DATASOURCES0_USERNAME
               value: suqnbqwz
-            - name: KUMULUZEE_DATASOURCES1_PASSWORD
+            - name: KUMULUZEE_DATASOURCES0_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: pg-pass
-                  key: KUMULUZEE_DATASOURCES1_PASSWORD
+                  name: pg-polnilnice-pass
+                  key: KUMULUZEE_DATASOURCES0_PASSWORD
           ports:
             - containerPort: 8080
               name: server
@@ -55,4 +55,4 @@ spec:
       protocol: TCP
       targetPort: server
   selector:
-    app:
+    app: polnilnice
