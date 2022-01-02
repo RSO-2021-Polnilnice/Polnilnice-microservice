@@ -1,5 +1,6 @@
 package si.fri.rso.polnilnice.graphql;
 
+import com.kumuluz.ee.cors.annotations.CrossOrigin;
 import com.kumuluz.ee.graphql.annotations.GraphQLClass;
 import com.kumuluz.ee.graphql.classes.Filter;
 import com.kumuluz.ee.graphql.classes.Pagination;
@@ -16,14 +17,15 @@ import javax.inject.Inject;
 
 @GraphQLClass
 @ApplicationScoped
+@CrossOrigin
 public class PolnilniceQueries {
     @Inject
     private PolnilnicaBean polnilnicaBean;
 
     @GraphQLQuery
-    public PaginationWrapper<Polnilnica> allImageMetadata(@GraphQLArgument(name = "pagination") Pagination pagination,
-                                                          @GraphQLArgument(name = "sort") Sort sort,
-                                                          @GraphQLArgument(name = "filter") Filter filter) {
+    public PaginationWrapper<Polnilnica> allPolnilnice(@GraphQLArgument(name = "pagination") Pagination pagination,
+                                                       @GraphQLArgument(name = "sort") Sort sort,
+                                                       @GraphQLArgument(name = "filter") Filter filter) {
 
         return GraphQLUtils.process(polnilnicaBean.getPolnilnice(), pagination, sort, filter);
     }
@@ -34,3 +36,4 @@ public class PolnilniceQueries {
     }
 
 }
+
