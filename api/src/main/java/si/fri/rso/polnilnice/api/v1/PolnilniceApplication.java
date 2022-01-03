@@ -8,7 +8,6 @@ import javax.ws.rs.core.Application;
 
 @RegisterService(value = "polnilnice-service", ttl = 20, pingInterval = 15, environment = "test", version = "1.0.0", singleton = false)
 @ApplicationPath("/v1")
-@CrossOrigin
 public class PolnilniceApplication extends Application {
 
 }

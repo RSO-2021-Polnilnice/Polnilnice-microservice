@@ -55,4 +55,4 @@ spec:
       protocol: TCP
       targetPort: server
   selector:
-    app:
+    app: polnilnice

@@ -15,7 +15,7 @@ import java.util.List;
 @Path("/termini")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-@CrossOrigin(allowOrigin = "*")
+@CrossOrigin(supportedMethods = "GET, POST, PUT, HEAD, DELETE, OPTIONS")
 public class TerminResource {
 
     @Inject
